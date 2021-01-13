@@ -1,7 +1,7 @@
 # rtree
 Small library to make genome interval overlap queries using memory efficient rtree.
 
-```
+```java
 SiteIndex<String> index = new SiteIndex<>();
 index.addSite("siteA", "chr1", 100, 200);
 index.addSite("siteB", "chr1", 190, 210);
