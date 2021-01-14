@@ -41,4 +41,19 @@
 
    </plugins>
   </build>
+
+  <distributionManagement>
+   <repository>
+    <uniqueVersion>false</uniqueVersion>
+    <id>dote</id>
+    <name>DOTE Repository</name>
+    <url>http://nexus.dote.ru/nexus/content/repositories/releases/</url>
+   </repository>
+   <snapshotRepository>
+    <uniqueVersion>true</uniqueVersion>
+    <id>dote-snapshots</id>
+    <name>DOTE Snapshots</name>
+    <url>http://nexus.dote.ru/nexus/content/repositories/snapshots/</url>
+   </snapshotRepository>
+  </distributionManagement>
 </project>
