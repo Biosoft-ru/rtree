@@ -26,12 +26,84 @@ public class RTree
                 resultConsumer.accept( idx );
             return;
         }
+        if(isStub(node))
+        	return;
         if(from <= getTo(node) && to >= getFrom(node))
         {
             findOverlapping( from, to, resultConsumer, leftChildNode(node) );
             findOverlapping( from, to, resultConsumer, rightChildNode(node) );
         }
     }
+    
+    
+    //return index of closest interval or -1
+    public int findClosest(int from, int to)
+    {
+    	return findClosest(from, to, 0);
+    }
+    
+    
+    private int findClosest(int from, int to, int node)
+    {
+        if(node >= nodeCount())
+        {
+        	int idx = node - nodeCount();
+        	if(idx < leafs.size())
+        		return idx;
+        	else
+        		return -1;
+        }
+        if(isStub(node))
+        	return -1;
+        
+        if(from <= getFrom(node))
+        	return leftMostLeaf(node);
+        if(to >= getTo(node))
+        	return rightMostLeaf(node);
+        
+        //query is contained in node interval
+        int lRes = findClosest(from, to, leftChildNode(node));
+        int rRes = findClosest(from, to, rightChildNode(node));
+        int lDistance = lRes == -1 ? Integer.MAX_VALUE : distance(from, to, leafs.getFrom(lRes), leafs.getTo( lRes ));
+        int rDistance = rRes == -1 ? Integer.MAX_VALUE : distance(from, to, leafs.getFrom(rRes), leafs.getTo( rRes ));
+        if(lDistance <= rDistance)
+        	return lRes;
+        return rRes;
+    }
+    
+
+    private int distance(int from1, int to1, int from2, int to2)
+    {
+        if(from1 > to2)
+            return from1 - to2;
+        if(from2 > to1)
+            return from2 - to1;
+        return 0;
+    }
+    
+    //return index in leafs
+    private int leftMostLeaf(int node)
+    {
+    	while(node < nodeCount())
+    		node = leftChildNode(node);
+    	return node - nodeCount();
+    }
+
+    //return index in leafs
+    private int rightMostLeaf(int node)
+    {
+    	while(node < nodeCount())
+    	{
+    		node = rightChildNode(node);
+    		if(node < nodeCount() && isStub(node))
+    			return leafs.size() - 1;
+    	}
+    	int idx = node - nodeCount();
+    	if(idx >= leafs.size())
+    		idx = leafs.size() - 1;
+    	return idx;
+    }
+  
   
     public TIntList queryIndices(int from, int to)
     {
@@ -107,4 +179,5 @@ public class RTree
     private int getTo(int node) { return data[2*node+1]; }
     private int setTo(int node, int value) { return data[2*node+1] = value; }
     private int firstNodeOnLevel(int level) { return (1<<level) - 1; }
+    private boolean isStub(int node) { return getFrom(node) > getTo(node); }
 }
