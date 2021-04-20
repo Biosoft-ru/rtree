@@ -13,14 +13,14 @@ public class SiteIndex<T> {
 	public void addSite(T site, String chr, int from, int to)
 	{
 		ChrData<T> chrData = byChr.computeIfAbsent(chr, x->new ChrData<>());
-		chrData.sites.add(site);
-		chrData.intervals.add(from, to);
+		chrData.sites.add(new Entry<>(site,from,to));
 	}
 	public void build()
 	{
 		byChr.values().forEach(chrData-> {
+			Collections.sort(chrData.sites);
 			chrData.index = new RTree();
-			chrData.index.build(chrData.intervals);
+			chrData.index.build(chrData);
 		});
 	}
 	
@@ -29,13 +29,45 @@ public class SiteIndex<T> {
 		ChrData<T> chrData = byChr.get(chr);
 		if(chrData == null)
 			return Collections.emptyList();
-		return chrData.index.queryList(chrData.sites, from, to);
+		ArrayList<T> result = new ArrayList<>();
+		chrData.index.findOverlapping( from, to, idx->result.add( chrData.sites.get( idx ).site ) );
+		return result;
 	}
 	
-	private static class ChrData<T>
+	private static class ChrData<T> implements IntervalArray
 	{
-		List<T> sites = new ArrayList<>();
+		List<Entry<T>> sites = new ArrayList<>();
 		RTree index;
-		CompactIntervalList intervals = new CompactIntervalList();
+		@Override
+		public int getFrom(int i) {
+			return sites.get(i).from;
+		}
+		@Override
+		public int getTo(int i) {
+			return sites.get(i).to;
+		}
+		@Override
+		public int size() {
+			return sites.size();
+		}
+	}
+	
+	private static class Entry<T> implements Comparable<Entry<T>>
+	{
+		public Entry(T site, int from, int to) {
+			super();
+			this.site = site;
+			this.from = from;
+			this.to = to;
+		}
+		T site;
+		int from,to;
+	    @Override
+	    public int compareTo(Entry i)
+	    {
+	        int res = Integer.compare( from, i.from );
+	        return res == 0 ? Integer.compare( to, i.to ) : res;
+	    }
+
 	}
 }
