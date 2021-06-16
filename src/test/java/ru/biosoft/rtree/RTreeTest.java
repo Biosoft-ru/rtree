@@ -37,6 +37,24 @@ public class RTreeTest extends TestCase
         assertEquals( 1, indices.get( 0 ));
     }
     
+    public void testNeg()
+    {
+        CompactIntervalList data = new CompactIntervalList();
+        data.add(1, 10);
+        data.add(5, 11);
+        data.add(12, 13);
+        data.add(13, 14);
+        data.add(14, 15);
+        
+        RTree rTree = new RTree();
+        rTree.build( data );
+        
+        TIntList indices = rTree.queryIndices( 0, 1 );
+        assertEquals( 1, indices.size() );
+        assertEquals( 0, indices.get( 0 ));
+    }
+    
+    
     public void testEmpty()
     {
     	CompactIntervalList data = new CompactIntervalList();
@@ -105,5 +123,20 @@ public class RTreeTest extends TestCase
         
         indices = rTree.queryIndices( 11, 15 );
         assertEquals( 0, indices.size() );
+    }
+    
+    public void testFindClosest()
+    {
+        CompactIntervalList data = new CompactIntervalList();
+        data.add(1, 10);
+        data.add(5, 11);
+        
+        RTree rTree = new RTree();
+        rTree.build( data );
+
+        assertEquals(1, rTree.findClosest(20, 22));
+        assertEquals(1, rTree.findClosest(11, 11));
+        assertEquals(0, rTree.findClosest(2, 3));
+        assertEquals(0, rTree.findClosest(0, 0));
     }
 }

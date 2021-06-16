@@ -1,1 +1,1 @@
-mvn jar:jar
+mvn compile jar:jar
