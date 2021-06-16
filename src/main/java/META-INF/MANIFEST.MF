@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-Description: Small library to make genome interval overlap queries using memory efficient rtree
+Bundle-SymbolicName: ru.biosoft.rtree
+Bundle-ManifestVersion: 2
+Export-Package: ru.biosoft.rtree;version="0.0.1"
+Bundle-Name: rtree
+Bundle-Version: 0.0.1
+Export-Package: ru.biosoft.rtree
