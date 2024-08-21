@@ -2,8 +2,37 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ru.biosoft.rtree</groupId>
   <artifactId>ru.biosoft.rtree</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
+
   <name>ru.biosoft.rtree</name>
+  <description>Small library to make genome interval overlap queries using memory efficient rtree</description>
+  <url>https://github.com/Biosoft-ru/rtree</url>
+
+    <licenses>
+        <license>
+            <name>GNU Affero General Public License (AGPL) version 3.0</name>
+            <url>https://www.gnu.org/licenses/agpl-3.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <organization>Biosoft.Ru LLC</organization>
+            <organizationUrl>https://github.com/Biosoft-ru</organizationUrl>
+        </developer>
+    </developers>
+
+  <scm>
+      <connection>scm:git:git://github.com/Biosoft-ru/rtree.git</connection>
+      <developerConnection>scm:git:ssh://github.com/Biosoft-ru/rtree.git</developerConnection>
+      <url>https://github.com/Biosoft-ru/rtree</url>
+  </scm>
+
+ <parent>
+  <groupId>ru.biosoft</groupId>
+  <artifactId>pom</artifactId>
+  <version>1.0.0</version>
+ </parent>
 
   <dependencies>
     <dependency>
@@ -22,6 +51,34 @@
 
   <build>
     <plugins>
+
+
+       <plugin>
+          <groupId>org.sonatype.central</groupId>
+          <artifactId>central-publishing-maven-plugin</artifactId>
+          <version>0.5.0</version>
+          <extensions>true</extensions>
+          <configuration>
+            <publishingServerId>central</publishingServerId>
+            <autoPublish>true</autoPublish>
+          </configuration>
+        </plugin>
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+                <execution>
+                    <id>sign-artifacts</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>sign</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -45,21 +102,13 @@
         </configuration>
       </plugin>
 
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-javadoc-plugin</artifactId>
+   </plugin>
+
+
    </plugins>
   </build>
 
-  <distributionManagement>
-   <repository>
-    <uniqueVersion>false</uniqueVersion>
-    <id>dote</id>
-    <name>DOTE Repository</name>
-    <url>http://nexus.dote.ru/nexus/content/repositories/releases/</url>
-   </repository>
-   <snapshotRepository>
-    <uniqueVersion>true</uniqueVersion>
-    <id>dote-snapshots</id>
-    <name>DOTE Snapshots</name>
-    <url>http://nexus.dote.ru/nexus/content/repositories/snapshots/</url>
-   </snapshotRepository>
-  </distributionManagement>
 </project>
