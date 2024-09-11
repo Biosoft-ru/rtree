@@ -34,6 +34,17 @@ public class SiteIndex<T> {
 		return result;
 	}
 	
+	public T findClosest(String chr, int from, int to)
+	{
+		ChrData<T> chrData = byChr.get(chr);
+		if(chrData == null)
+			return null;
+		int idx = chrData.index.findClosest(from, to);
+		if(idx == -1)
+			return null;
+		return chrData.sites.get(idx).site;
+	}
+	
 	private static class ChrData<T> implements IntervalArray
 	{
 		List<Entry<T>> sites = new ArrayList<>();
