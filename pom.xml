@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ru.biosoft.rtree</groupId>
   <artifactId>ru.biosoft.rtree</artifactId>
-  <version>0.0.2</version>
+  <version>0.0.3</version>
 
   <name>ru.biosoft.rtree</name>
   <description>Small library to make genome interval overlap queries using memory efficient rtree</description>
