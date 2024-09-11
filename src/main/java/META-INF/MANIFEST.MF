@@ -6,3 +6,4 @@ Export-Package: ru.biosoft.rtree;version="0.0.1"
 Bundle-Name: rtree
 Bundle-Version: 0.0.1
 Export-Package: ru.biosoft.rtree
+Require-Bundle: gnu.trove
