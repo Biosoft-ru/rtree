@@ -15,12 +15,12 @@ List<String> result = index.queryOverlapping("chr1", 50, 110);
 <dependency>
     <groupId>ru.biosoft.rtree</groupId>
     <artifactId>ru.biosoft.rtree</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
 </dependency>
 ```
 
 ## Gradle
 
 ```groovy
-implementation group: 'ru.biosoft.rtree', name: 'ru.biosoft.rtree', version: '0.0.2'
+implementation group: 'ru.biosoft.rtree', name: 'ru.biosoft.rtree', version: '0.0.3'
 ```
